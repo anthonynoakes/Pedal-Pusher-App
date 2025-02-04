@@ -35,3 +35,30 @@ input[type='file'] {
 .workout-item:hover {
   background-color: #f0f0f0;
 }
+
+.inline-list {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.inline-list li {
+  display: inline-block; /* Make list items inline */
+  margin-right: 10px; /* Add spacing between items */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+td:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}

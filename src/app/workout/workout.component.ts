@@ -1,13 +1,15 @@
 import { Router } from '@angular/router';
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, Inject, OnInit, ViewChild } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, Inject, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FITNESS_MACHINE_SERVICE, FitnessMachineService } from './../services/fitness-machine/fitness-machine.service'
 import { ToastContainerDirective, ToastrModule, ToastrService } from 'ngx-toastr';
+import { WorkoutData } from '../services/workout-processor/workout-processor.service';
 
 @Component({
   selector: 'app-workout',
   imports: [
     ToastrModule,
+    CommonModule,
     // ToastContainerDirective
   ],
   templateUrl: './workout.component.html',
@@ -16,12 +18,18 @@ import { ToastContainerDirective, ToastrModule, ToastrService } from 'ngx-toastr
 export class WorkoutComponent implements AfterViewInit, OnInit {
   connecting: boolean = false
   toastContainer: ToastContainerDirective | undefined;
+  @Input() selectedWorkout: WorkoutData | null = null;
+
 
   constructor(
     private router: Router,
     private toastService: ToastrService,
     @Inject(FITNESS_MACHINE_SERVICE) private fitnessMachineService: FitnessMachineService
-    ) {}
+    ) {
+      // let w = this.router.getCurrentNavigation()?.extras.state;
+      // this.selectedWorkout = w as WorkoutData
+      this.selectedWorkout = null;
+    }
 
 
   ngOnInit(): void {
@@ -41,6 +49,10 @@ export class WorkoutComponent implements AfterViewInit, OnInit {
 
   navigateHome() {
     this.router.navigate(['/']);
+  }
+
+  navigateSelectWorkout() {
+    this.router.navigate(['/workout-catalog']);
   }
 
   connect() {

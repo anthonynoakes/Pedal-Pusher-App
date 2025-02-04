@@ -45,7 +45,9 @@ export class WorkoutCatalogComponent implements OnInit {
 
   loadWorkouts() {
     // TODO wrap in get workouts
-    let workoutKeys = this.ls.getAllKeys().filter( k => k.startsWith('workout_'));
+    let workoutKeys = this.ls.getAllKeys()?.filter( k => k.startsWith('workout_'));
+    if (workoutKeys == null) return;
+
     for (const key of workoutKeys) {
       const workoutJson = localStorage.getItem(key);
       if (workoutJson) {
@@ -78,6 +80,17 @@ export class WorkoutCatalogComponent implements OnInit {
     // Add your logic here for handling the click event
   }
 
+  onWorkoutDeleteClick(title: string) {
+    this.ls.removeItem(title);
+    this.loadWorkouts();
+  }
+
+  navigateStartWorkout() {
+    if (this.selectedWorkout == null) return;
+
+    const data = { message: 'Hello from Sender!' };
+    this.router.navigate(['/workout-session'], { state: this.selectedWorkout });  
+  }
 
   navigateHome() {
     this.router.navigate(['/']);
@@ -135,6 +148,8 @@ export class WorkoutCatalogComponent implements OnInit {
       // check if there is conflicts, can we do a comparison?
       const key = `workout_${workoutData.title}`; // Use a unique key based on the title
       this.ls.storeItem(key, JSON.stringify(workoutData))
+
+      this.loadWorkouts();
     };
 
     // Handle errors

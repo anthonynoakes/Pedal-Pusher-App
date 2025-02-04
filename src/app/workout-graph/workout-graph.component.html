@@ -1,0 +1,28 @@
+<!-- workout-graph.component.html -->
+<svg width="100%" height="200" viewBox="0 0 500 200" preserveAspectRatio="none">
+    <!-- Background grid (optional) -->
+    <g *ngFor="let tick of getGridTicks(10); let i = index">
+      <line [attr.x1]="0" [attr.y1]="tick" [attr.x2]="500" [attr.y2]="tick" stroke="#ccc" stroke-width="1" />
+      <text [attr.x]="510" [attr.y]="tick + 5" font-size="10" fill="#666">{{ getPowerForTick(i) }}</text>
+    </g>
+  
+    <!-- Bars for each interval -->
+    <g *ngFor="let interval of workout?.intervals; let i = index">
+      <rect
+        [attr.x]="getBarX(i)"
+        [attr.y]="getBarY(interval.targetWatts)"
+        [attr.width]="getBarWidth(interval.durationSeconds)"
+        [attr.height]="getBarHeight(interval.targetWatts)"
+        fill="#36A2EB"
+      />
+      <text
+        [attr.x]="getBarX(i) + getBarWidth(interval.durationSeconds) / 2"
+        [attr.y]="getBarY(interval.targetWatts) - 5"
+        text-anchor="middle"
+        font-size="10"
+        fill="#000"
+      >
+        {{ interval.targetWatts }}
+      </text>
+    </g>
+  </svg>

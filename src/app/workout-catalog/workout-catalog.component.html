@@ -1,6 +1,7 @@
 <div class="home">
     <h1>workout-catalog works!</h1>
     <button (click)="navigateHome()">Let's go Home</button>
+    <button (click)="navigateStartWorkout()">Start Workout</button>
 </div>
 
 <div>
@@ -27,7 +28,7 @@
     <p>Loading workouts...</p>
   </div>
   
-  <div *ngIf="showWorkoutList">
+  <!-- <div *ngIf="showWorkoutList">
     <ul>
       <li
         *ngFor="let title of getWorkoutTitles()"
@@ -37,6 +38,23 @@
         {{ title }}
       </li>
     </ul>
+  </div> -->
+
+  <div *ngIf="showWorkoutList">
+    <table>
+      <thead>
+        <tr>
+          <th>Workout Title</th>
+          <th>Details</th> <!-- Add a header for the second row -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let title of getWorkoutTitles()">
+          <td (click)="onWorkoutClick(title)">{{ title }}</td>
+          <td (click)="onWorkoutDeleteClick(title)">Delete</td> <!-- Add a second row for each workout -->
+        </tr>
+      </tbody>
+    </table>
   </div>
   
   <div *ngIf="!isLoading && !showWorkoutList">

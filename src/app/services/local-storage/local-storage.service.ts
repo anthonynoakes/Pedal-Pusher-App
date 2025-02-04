@@ -38,7 +38,10 @@ export class LocalStorageService {
     localStorage.removeItem(key);
   }
 
-  public getAllKeys(): string[] {
-    return Object.keys(localStorage);
+  public getAllKeys(): string[] | null{
+    if (typeof localStorage !== 'undefined') {
+      return Object.keys(localStorage);      
+    }
+    return null;
   }
 }
