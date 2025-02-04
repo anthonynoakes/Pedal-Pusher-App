@@ -1,0 +1,58 @@
+<div class="home">
+    <h1>workout-catalog works!</h1>
+    <button (click)="navigateHome()">Let's go Home</button>
+</div>
+
+<div>
+    <h2>Upload Workout File</h2>
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+      <input
+        type="file"
+        formControlName="file"
+        (change)="onFileChange($event)"
+        accept=".zwo, .erg"
+      />
+      <div *ngIf="uploadForm.get('file')?.invalid && uploadForm.get('file')?.touched">
+        <p *ngIf="uploadForm.get('file')?.errors?.['required']">File is required.</p>
+        <p *ngIf="uploadForm.get('file')?.errors?.['invalidFileType']">
+          Only .zwo and .erg files are allowed.
+        </p>
+      </div>
+      <button type="submit" [disabled]="uploadForm.invalid">Upload</button>
+    </form>
+  </div>
+
+<div>
+  <div *ngIf="isLoading">
+    <p>Loading workouts...</p>
+  </div>
+  
+  <div *ngIf="showWorkoutList">
+    <ul>
+      <li
+        *ngFor="let title of getWorkoutTitles()"
+        (click)="onWorkoutClick(title)"
+        class="workout-item"
+      >
+        {{ title }}
+      </li>
+    </ul>
+  </div>
+  
+  <div *ngIf="!isLoading && !showWorkoutList">
+    <p>No workouts available.</p>
+  </div>
+  
+  <!-- Display selected workout details -->
+  <div *ngIf="selectedWorkout">
+    <h2>{{ selectedWorkout.title }}</h2>
+    <p>{{ selectedWorkout.description }}</p>
+    <p>FTP: {{ selectedWorkout.ftp }}</p>
+    <ul>
+      <li *ngFor="let interval of selectedWorkout.intervals">
+        {{ interval.startSeconds }}s - {{ interval.durationSeconds }}s: {{ interval.targetWatts }}W
+      </li>
+    </ul>
+  </div>
+</div>
+  

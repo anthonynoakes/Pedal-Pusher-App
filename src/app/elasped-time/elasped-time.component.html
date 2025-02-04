@@ -1,0 +1,8 @@
+<div class="elasped-time">
+    <h1>{{ formatTime(elapsedTime) }}</h1>
+    <div class="controls">
+      <button (click)="start()" [disabled]="isRunning">Start</button>
+      <button (click)="pause()" [disabled]="!isRunning">Pause</button>
+      <button (click)="reset()" [disabled]="elapsedTime === 0">Reset</button>
+    </div>
+  </div>  
